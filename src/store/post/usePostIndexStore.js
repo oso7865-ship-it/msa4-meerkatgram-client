@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import myAxios from "../../api/myAxios";
+import { useMyErrorStore } from "../error/useMyErrorStore";
 
 const usePostIndexStore = defineStore('postIndex',() => {
   // 1. State (ref)
@@ -19,19 +20,22 @@ const getPostPagination = async (page = 1) => {
       const params = {
         page,
       };
-  
+
       const res = await myAxios.get(url, { params });
       const data = res.data.data; 
       isLastPage.value = data.lastPage;
       items.value.push(...data.posts);
   
       currentPage.value++; // 현재 페이지 업데이트
+  
     } catch (error) {
       console.error(error);
+      useMyErrorStore().setErrorInfo(error);
     }
 
   }
 }
+
 return {
   // state
   items,

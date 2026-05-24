@@ -35,8 +35,8 @@ let currentPage = 0;
 const postIndexStore = usePostIndexStore();
 
 // 다음 페이지 불러오기
-const getNextPage = () => {
-  postIndexStore.getPostPagination(postIndexStore.getNextPageNumber);
+const getNextPage = async () => {
+  await postIndexStore.getPostPagination(postIndexStore.getNextPageNumber);
 }
 
 

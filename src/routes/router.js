@@ -5,18 +5,13 @@ import MyError from "../pages/erroes/MyError.vue";
 const routes = [
   {
     path: '/',
-    component: PostIndex,
+    redirect: '/posts'
   },
   // 게시글 관련
   {
     path: '/posts',
     component: PostIndex, 
   },
-  // 에러 관련
-  {
-    path:'/errors',
-    component: MyError,
-  }
 ];
 
 const router = createRouter({
