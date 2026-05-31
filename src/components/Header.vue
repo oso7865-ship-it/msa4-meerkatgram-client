@@ -1,31 +1,42 @@
 <script setup>
 import { ref } from 'vue';
 import MyButton from './buttons/MyButton.vue';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '../store/auth/useAuthStore.js';
 
-// Todo: 로그인 여부에 따라 버튼이 달라져야 함
-const isloggedIn = ref(true);
+
+const router = useRouter();
+const authStore = useAuthStore();
+
+const redirectMain = () => {
+  router.push('/')
+}
+const redirectLogin = () => {
+  router.push('/login')
+}
 </script>
 
 <template>
 <div class="header">
   <div class="title-box">
-    <h1 class="title">Meerkatgram</h1>
+    <h1 class="title" @click="redirectMain()">Meerkatgram</h1>
   </div>
   <div class="btn-box">
     <MyButton 
-    v-if="!isloggedIn"
+    v-if="!authStore.isLoggedIn"
+    @click="redirectLogin()"
     :content="'Sign In'" 
     :color="'gray'"
     :size="'small'"
     />
     <MyButton 
-    v-if="!isloggedIn"
+    v-if="!authStore.isLoggedIn"
     :content="'Sign Up'" 
     :color="'white'"
     :size="'small'"
     />
     <MyButton 
-    v-if="isloggedIn"
+    v-if="authStore.isLoggedIn"
     :content="'Logout'" 
     :color="'black'"
     :size="'small'"
@@ -47,6 +58,7 @@ const isloggedIn = ref(true);
 }
 
 .title {
+  cursor: pointer;
   font-size: 20px;
 }
 .btn-box {
