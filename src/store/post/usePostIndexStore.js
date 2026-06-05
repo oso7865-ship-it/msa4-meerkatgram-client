@@ -31,14 +31,12 @@ const getPostPagination = async (page = 1) => {
       const data = res.data.data; 
       isLastPage.value = data.lastPage;
       items.value.push(...data.posts);
-  
+
       currentPage.value++; // 현재 페이지 업데이트
-  
     } catch (error) {
       console.error(error);
-      useMyErrorStore().setErrorInfo(error);
+      throw error;
     }
-
   }
 }
 

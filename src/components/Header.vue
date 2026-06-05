@@ -53,6 +53,7 @@ const redirectLogout = async () => {
     />
   </div>
 </div>
+<hr>
 </template>
 
 <style scoped>

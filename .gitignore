@@ -12,13 +12,16 @@ dist
 dist-ssr
 *.local
 
+<<<<<<< HEAD
+=======
 .env*
 public
 src/assets
 
+
+>>>>>>> 505d507 (260521[develop] 초기화 및 게시글 index 페이지 작업중)
 # Editor directories and files
 .vscode/*
-!.vscode/launch.json
 !.vscode/extensions.json
 .idea
 .DS_Store

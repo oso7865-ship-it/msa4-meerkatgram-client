@@ -3,44 +3,28 @@ import { onBeforeMount, onBeforeUnmount, ref } from 'vue';
 import MyButton from '../../components/buttons/MyButton.vue';
 import usePostIndexStore from '../../store/post/usePostIndexStore.js';
 import { useRouter } from 'vue-router';
+import { useMyErrorStore } from '../../store/error/useMyErrorStore.js';
 
 const posts = ref([]);
 const isLastPage = ref(false);
 let currentPage = 0;
 
-// ----------------------start----------------------------
-// 스토어로 이관
-// const getPostPagination = async (page = 1) => {
-//   // 마지막 페이지가 아닐 경우만 실행
-//   if(!isLastPage.value){ 
-//     try {
-      
-//           const url = '/api/posts';
-//           const params = {
-//             page,
-//           };
-      
-//           const res = await myAxios.get(url, { params});
-//           const data = res.data.data; 
-//           isLastPage.value = data.lastPage;
-//           posts.value.push(...data.posts);
-      
-//           currentPage = page; // 현재 페이지 업데이트
-//     } catch (error) {
-//       console.error(error);
-//     }
-
-//   }
-// }
-// ----------------------end------------------------------
-
 const router = useRouter();
-
 const postIndexStore = usePostIndexStore();
+const myErrorStore = useMyErrorStore();
+
+const getPagination = async (page = 1) => {
+try {
+  await postIndexStore.getPostPagination(page);
+} catch (error) {
+  myErrorStore.setErrorInfo(error);
+  router.replace('/error')
+}
+}
 
 // 다음 페이지 불러오기
 const getNextPage = async () => {
-  await postIndexStore.getPostPagination(postIndexStore.getNextPageNumber);
+  await getPagination(postIndexStore.getNextPageNumber);
 }
 
 const redirectShow = (id) => {
@@ -49,7 +33,7 @@ const redirectShow = (id) => {
 
 
 // 라이프 사이클
-onBeforeMount(postIndexStore.getPostPagination);
+onBeforeMount(getPagination);
 onBeforeUnmount(postIndexStore.clearPostIndex);
 
 </script>
