@@ -5,7 +5,7 @@ import { useMyErrorStore } from '../store/error/useMyErrorStore';
 const myErrorStore = useMyErrorStore();
 </script>
 
-<!-- --------------------------------------------구분선------------------------------------ -->
+<!-- ------------------------------------구분선------------------------------------ -->
 
 <template>
   <MyError v-if="myErrorStore.isError"></MyError>

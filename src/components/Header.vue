@@ -14,6 +14,14 @@ const redirectMain = () => {
 const redirectLogin = () => {
   router.push('/login')
 }
+const redirectRegistration = () => {
+  router.push('/registration')
+}
+
+const redirectLogout = async () => {
+  await authStore.logout();
+  router.replace('/');
+}
 </script>
 
 <template>
@@ -31,12 +39,14 @@ const redirectLogin = () => {
     />
     <MyButton 
     v-if="!authStore.isLoggedIn"
+    @click="redirectRegistration"
     :content="'Sign Up'" 
     :color="'white'"
     :size="'small'"
     />
     <MyButton 
     v-if="authStore.isLoggedIn"
+    @click="redirectLogout"
     :content="'Logout'" 
     :color="'black'"
     :size="'small'"

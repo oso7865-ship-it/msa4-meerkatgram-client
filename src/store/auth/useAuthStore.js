@@ -30,7 +30,6 @@ export const useAuthStore = defineStore('authStore', () => {
           return;
         }
       }
-
       useMyErrorStore().setErrorInfo(error);
     }
   }
@@ -48,7 +47,38 @@ export const useAuthStore = defineStore('authStore', () => {
 
       return true;
     } catch (error) {
+        clearAuthStore();
+        return false;     
+    }
+  }
+
+  const logout = async () => {
+    try {
+      const url = '/api/logout';
+
+      const res = await myAxios.post(url);
+
+    } catch (error) {
+      console.error(error)
+    } finally {
       clearAuthStore();
+    }
+  }
+
+  const clearAuthStore = () => {
+    isLoggedIn.value = false;
+    accessToken.value = '';
+    userInfo.value = null;
+  };
+
+  const registration = async (data) => {
+    try {
+      const url = '/api/registration';
+
+      await myAxios.post(url, data);
+      return;
+    } catch (error) {
+      console.error(error);
       throw error;
     }
   }
@@ -64,5 +94,8 @@ export const useAuthStore = defineStore('authStore', () => {
     // Actions
     login,
     reissue,
+    logout,
+    clearAuthStore,
+    registration,
   }
 });

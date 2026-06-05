@@ -34,10 +34,11 @@ myAxios.interceptors.request.use(async (config) => {
     }
 
   }
+  if(accessToken){
+    config.headers.Authorization = `Bearer ${accessToken}`;
+  }
 
-  config.headers.Authorization = `Bearer ${accessToken}`;
   return config;
-
 });
 
 
