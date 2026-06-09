@@ -31,10 +31,34 @@ const useFileStore = defineStore('fileSotre', () => {
     }
   }
 
+    const createPost = async (content, file) => {
+    try {
+      const url = `/api/postCreate`
+
+      const data = new FormData();
+      data.append('content', content)
+      data.append('file', file);
+
+      // Content-type 변경
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+
+      const res = await myAxios.post(url, data);
+
+      return res.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
 
 
   return {
     uploadProfile,
+    createPost,
   }
 });
 
