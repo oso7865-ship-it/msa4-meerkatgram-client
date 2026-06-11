@@ -26,12 +26,30 @@ const usePostShowStore = defineStore('postShowSotre', () => {
     post.value = null;
   }
 
+  const deletePost = async (postId) => {
+  const url = `/api/postDelete/${postId}`;
+
+  const res = await myAxios.delete(url);
+
+  return res.data;
+};
+
+const toggleLike = async (postId) => {
+  const url = `/api/posts/${postId}/likes`;
+
+  const res = await myAxios.post(url);
+
+  return res.data;
+}
+
 
 
   return {
     post,
     getPost,
     clearPostShow,
+    deletePost,
+    toggleLike
   }
 });
 
