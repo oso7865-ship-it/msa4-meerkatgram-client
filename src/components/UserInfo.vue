@@ -1,7 +1,24 @@
 <script setup>
+import { useRouter } from 'vue-router';
 import { useAuthStore } from '../store/auth/useAuthStore';
 
 const authStore = useAuthStore();
+const router = useRouter();
+
+const getCreatePostPage = () => {
+      try {
+    router.push('/postCreate');
+    } catch (error) {      
+      if (error.response) {
+        if (error.response.data.code === 'E04') {
+          alert(error.response.data.data);
+          return;
+        }
+      }
+      myErrorStore.setErrorInfo(error);
+      router.replace('/error')
+    }
+}
 </script>
 
 <template>
@@ -29,6 +46,7 @@ const authStore = useAuthStore();
         <div 
         class="bg-image-square redirect-icon-posts-create"
         style="background-image: url('/icon/plus-button.png')"
+        @click="getCreatePostPage();"
         ></div>
         <div 
         class="bg-image-square redirect-icon-posts-users-info"
@@ -54,6 +72,10 @@ const authStore = useAuthStore();
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
+}
+
+.redirect-icon-posts-create{
+  cursor: pointer;
 }
 
 
